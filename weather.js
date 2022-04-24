@@ -1,11 +1,16 @@
 #!usr/bin/env/node
 import { getArgs } from './helpers/args.js';
+import { getWeather } from './sevices/api.service.js';
 import { printHelp, printSuccess, printError } from './sevices/log.service.js';
-import { saveKeyValue } from './sevices/storage.service.js';
+import { saveKeyValue, TOKEN_DICTIONARY } from './sevices/storage.service.js';
 
 const saveToken = async (token) => {
+  if (!token.length) {
+    printError('Не прердан token');
+    return;
+  }
   try {
-    await saveKeyValue('token', token);
+    await saveKeyValue(TOKEN_DICTIONARY.token, token);
     printSuccess('Токен сохранен');
   } catch (error) {
     printError(error.message);
@@ -27,7 +32,7 @@ const initCLI = () => {
     return saveToken(args.t);
   }
 
-  // вывести погоду
+  getWeather('minsk');
 };
 
 initCLI();
