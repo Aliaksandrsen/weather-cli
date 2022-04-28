@@ -33,6 +33,7 @@ const initCLI = () => {
   }
 
   getWeather('minsk');
+  // Вывод погоды
 };
 
 initCLI();
