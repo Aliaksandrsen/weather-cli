@@ -17,6 +17,21 @@ const saveToken = async (token) => {
   }
 };
 
+const getForcast = async (city) => {
+  try {
+    const weather = await getWeather('minsk');
+    console.log(weather);
+  } catch (error) {
+    if (error?.response?.status === 404) {
+      printError('Не найдено города');
+    } else if (error?.response?.status === 401) {
+      printError('Не предан token');
+    } else {
+      printError(error.message);
+    }
+  }
+};
+
 const initCLI = () => {
   const args = getArgs(process.argv);
 
@@ -32,8 +47,7 @@ const initCLI = () => {
     return saveToken(args.t);
   }
 
-  getWeather('minsk');
-  // Вывод погоды
+  getForcast();
 };
 
 initCLI();
